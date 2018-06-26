@@ -6,13 +6,13 @@ git_source(:github) do |repo_name|
 end
 
 ruby "2.5.1"
-
 gem "puma", "~> 3.7"
 gem "rails", "~> 5.2.0"
 
-# rails 5.2 compatibility
-# Reduces boot times through caching; required in config/boot.rb
+gem "active_interaction", "~> 3.6"
 gem "bootsnap", ">= 1.1.0", require: false
+gem "typhoeus"
+gem "hashie"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -20,6 +20,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+  gem "spring-commands-rspec"
 
   gem "rubocop"
 
@@ -37,6 +38,6 @@ group :development, :test do
 end
 
 group :test do
-  gem "webmock"
   gem "faker"
+  gem "webmock"
 end

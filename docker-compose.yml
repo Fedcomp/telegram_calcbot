@@ -10,12 +10,20 @@ services:
       - ./vendor/bundle:/usr/local/bundle
     links:
       - db
+      - tor
     ports:
       - 3000:3000
-    env_file: docker/backend/development.env
+    env_file:
+      - docker/backend/development.env
+      - .env
 
   test:
     <<: *backend
     command: ["bundle", "exec", "guard"]
     ports: []
-    env_file: docker/backend/test.env
+    env_file:
+      - docker/backend/test.env
+      - .env
+
+  tor:
+    image: dperson/torproxy

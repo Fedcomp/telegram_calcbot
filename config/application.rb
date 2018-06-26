@@ -19,7 +19,8 @@ Bundler.require(*Rails.groups)
 
 module Calcbot
   class Application < Rails::Application
-    config.autoload_paths << Rails.root.join("lib").to_s
+    config.autoload_paths << Rails.root.join("lib")
+    config.eager_load_paths << Rails.root.join("lib")
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
@@ -32,5 +33,16 @@ module Calcbot
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    # config.force_ssl = true
+
+    config.action_controller.default_url_options = {
+      host: ENV["SITE_DOMAIN"],
+      protocol: "https"
+    }
+
+    Rails.application.routes.default_url_options = {
+      host: ENV["SITE_DOMAIN"],
+      protocol: "https"
+    }
   end
 end

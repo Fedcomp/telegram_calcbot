@@ -20,3 +20,6 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   Enabled: false
+
+Style/GuardClause:
+  Enabled: false
