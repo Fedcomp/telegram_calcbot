@@ -18,7 +18,9 @@ module Telegram
         # TODO: Faulty, fix it
         Hashie::Mash.new(JSON.parse(response.body))
       else
-        { ok: false, http_code: response.code, timeout: response.timed_out? }
+        Hashie::Mash.new(
+          ok: false, http_code: response.code, timeout: response.timed_out?
+        )
       end
     end
   end

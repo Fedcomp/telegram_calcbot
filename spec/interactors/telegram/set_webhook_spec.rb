@@ -5,7 +5,7 @@ RSpec.describe Telegram::SetWebhook do
 
   before do
     # Quick and dirty
-    allow_any_instance_of(Telegram::SetWebhook)
+    allow_any_instance_of(described_class)
       .to receive(:telegram_client).and_return(telegram_client)
   end
 

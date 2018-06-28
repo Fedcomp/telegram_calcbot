@@ -23,7 +23,8 @@ RSpec.describe Telegram::Client do
 
     # TODO: Better error handling
     it "return error code and timeout status if request was not succesful" do
-      expect(subject.get_webhook_info).to eq(ok: false, http_code: 400, timeout: false)
+      expect(subject.get_webhook_info)
+        .to eq({ok: false, http_code: 400, timeout: false}.as_json)
     end
   end
 end
