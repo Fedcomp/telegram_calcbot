@@ -8,7 +8,7 @@ module Api
       private
 
       def telegram_update_params
-        params.slice(:update_id, :message).to_unsafe_h
+        params.slice(:update_id, :message, :callback_query).to_unsafe_h
       end
     end
   end

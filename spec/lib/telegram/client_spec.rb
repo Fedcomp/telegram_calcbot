@@ -19,12 +19,14 @@ RSpec.describe Telegram::Client do
   end
 
   context "errors" do
-    let(:mocked_response) { double(success?: false, code: 400, timed_out?: false) }
+    let(:mocked_response) do
+      double(success?: false, code: 400, timed_out?: false, body: "invalid arg")
+    end
 
     # TODO: Better error handling
     it "return error code and timeout status if request was not succesful" do
       expect(subject.get_webhook_info)
-        .to eq({ok: false, http_code: 400, timeout: false}.as_json)
+        .to eq({ ok: false, http_code: 400, timeout: false, body: "invalid arg" }.as_json)
     end
   end
 end

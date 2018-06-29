@@ -50,6 +50,19 @@ module Telegram
       string :text, default: nil
     end
 
+    hash :callback_query, default: nil do
+      hash :message do
+        integer :message_id
+        string  :text
+
+        hash :chat do
+          integer :id
+        end
+      end
+
+      string :data
+    end
+
     # edited_message  Message  Optional.
     # New version of a message that is known to the bot and was edited
 
@@ -75,18 +88,34 @@ module Telegram
     # New incoming pre-checkout query. Contains full information about checkout
 
     def execute
-      return unless given? :message
-      return reset_keypad if message.dig("text") == "/start"
+      # TODO: Check update_id to ignore duplicates
+      return send_keypad if given?(:message) && message.dig("text") == "/start"
+      return calculate if given?(:callback_query)
     end
 
     private
 
-    def reset_keypad
+    def send_keypad
       response = telegram_client.send_message chat_id: message.dig("chat", "id"),
                                               text: "0",
                                               reply_markup: KEYPAD.to_json
 
       raise "Can't register webhook #{response.as_json}" unless response.ok
+    end
+
+    def calculate
+      chat_id = callback_query.dig("message", "chat", "id")
+      message_id = callback_query.dig("message", "message_id")
+      value = callback_query.dig("message", "text")
+      modifier = callback_query.dig("data")
+      new_text = Telegram::CalculateState.run! value: value, modifier: modifier
+
+      response = telegram_client.edit_message_text chat_id: chat_id,
+                                                   message_id: message_id,
+                                                   text: new_text,
+                                                   reply_markup: KEYPAD.to_json
+
+      raise "Can't edit keypad message #{response.as_json}" unless response.ok
     end
   end
 end
