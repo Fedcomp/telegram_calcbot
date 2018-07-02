@@ -119,5 +119,12 @@ RSpec.describe Telegram::HandleUpdate do
 
       described_class.run(params)
     end
+
+    it "does not modify if there is no changes" do
+      expect(Telegram::CalculateState).to receive(:run!).and_return("0")
+      expect(telegram_client).not_to receive(:edit_message_text)
+
+      described_class.run(params)
+    end
   end
 end

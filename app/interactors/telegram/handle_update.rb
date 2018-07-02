@@ -109,6 +109,7 @@ module Telegram
       value = callback_query.dig("message", "text")
       modifier = callback_query.dig("data")
       new_text = Telegram::CalculateState.run! value: value, modifier: modifier
+      return if new_text == value
 
       response = telegram_client.edit_message_text chat_id: chat_id,
                                                    message_id: message_id,
