@@ -16,7 +16,7 @@ module Telegram
           operator: nil
         )
       when "+"
-        if state[:operator] == "+" # do calc
+        if state[:operator] == "+" && state[:apply_value] # do calc
           state[:current_value] += state[:apply_value]
           state[:apply_value] = nil
           state[:operator] = nil
@@ -24,7 +24,7 @@ module Telegram
           state[:operator] = "+"
         end
       when "-"
-        if state[:operator] == "-" # do calc
+        if state[:operator] == "-" && state[:apply_value] # do calc
           state[:current_value] -= state[:apply_value]
           state[:apply_value] = nil
           state[:operator] = nil

@@ -11,11 +11,13 @@ RSpec.describe Telegram::CalculateState do
 
   # button +
   specify { expect(subject.run!(value: "1", modifier: "+")).to eq("1 +") }
+  specify { expect(subject.run!(value: "1 +", modifier: "+")).to eq("1 +") }
   specify { expect(subject.run!(value: "5 + 10", modifier: "+")).to eq("15") }
   specify { expect(subject.run!(value: "1 -", modifier: "+")).to eq("1 +") }
 
   # button -
   specify { expect(subject.run!(value: "1", modifier: "-")).to eq("1 -") }
+  specify { expect(subject.run!(value: "1 -", modifier: "-")).to eq("1 -") }
   specify { expect(subject.run!(value: "5 - 10", modifier: "-")).to eq("-5") }
   specify { expect(subject.run!(value: "1 +", modifier: "-")).to eq("1 -") }
 
