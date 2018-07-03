@@ -6,8 +6,8 @@ module ConfiguredHttpClient
       HttpClient.new timeout: 10,
                      connecttimeout: 10,
                      verbose: false,
-                     proxy: "tor:9050",  # TODO: Configurable in ENV's
-                     proxytype: "socks5" # TODO: Configurable in ENV's
+                     proxy: ENV["PROXY_HOST"].presence,
+                     proxytype: ENV["PROXY_TYPE"].presence
     end
   end
 end
